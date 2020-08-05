@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+            <div>
+                <p id="display">00:00:00</p>
+            </div>
+            <div class="buttons">
+                <button class="button" onclick="start()"  id='start'>Start</button>
+                <button class="button" onclick="reset()" id='reset';>Reset</button>
+            </div>       
+    </div>
+
+
+    <script>
+        let seconds = 0;
+        let minits = 0;
+        let hours = 0;
+
+        let displaySeconds = 0;
+        let displayMinutes = 0;
+        let displayHours = 0;
+
+        let startId = null;
+        let status = "stopped";
+        
+        function stopWatch(){
+            seconds++;
+            if(seconds / 60 ===1){
+                seconds = 0;
+                minits++;
+                if(minits / 60 ===1){
+                    minits = 0;
+                    hours++;
+                }
+            }
+            if(seconds < 10){
+                displaySeconds = '0' + seconds.toString();
+            }
+            else{
+                displaySeconds =  seconds;
+            }
+            if(minits < 10){
+                displayMinutes = '0' + minits.toString();
+            }
+            else{
+                displayMinutes =  minits;
+            }
+            if(hours < 10){
+                displayHours = '0' + hours.toString();
+            }
+            else{
+                displayHours = hours;
+            }
+
+            document.getElementById('display').innerHTML = displayHours + ':' + displayMinutes + ':' + displaySeconds;
+        }
+        function start(){
+            if(status === "stopped"){
+                startId = window.setInterval(stopWatch,1000);
+                document.getElementById('start').innerHTML = "Stop";
+                // console.log('1st: ',status);
+                status = "started"
+                // console.log('2nd: ',status);
+            }
+            else {
+                window.clearInterval(startId);
+                document.getElementById('start').innerHTML = "Start";
+                // console.log('3rd:',status);
+                status = "stopped";
+                // console.log('4th:',status);
+            }
+        }
+        function reset(){
+            window.clearInterval(startId);
+            seconds = 0;
+            minits  = 0;
+            hours = 0;
+            document.getElementById('display').innerHTML = "00:00:00";
+            document.getElementById('start').innerHTML = "Start";
+        }
+        
+    </script>
+</body>
+</html>
